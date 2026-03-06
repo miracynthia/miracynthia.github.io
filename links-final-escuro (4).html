@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cynthia Mira · Nutricionista</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #25384d;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 80%, rgba(240,240,240,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { width: 100%; max-width: 420px; position: relative; z-index: 1; }
+
+  .header { text-align: center; margin-bottom: 56px; animation: fadeDown 0.8s ease both; }
+  .logo-img { width: 220px; mix-blend-mode: screen; margin-bottom: 4px; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .logo-mark {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(240,240,240,0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(240,240,240,0.06);
+  }
+
+  .logo-cm { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: #f0f0f0; font-style: italic; }
+  .header-name { font-size: 13px; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; color: #f0f0f0; margin-bottom: 6px; }
+  .header-title { font-size: 10px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: rgba(240,240,240,0.38); }
+  .header-divider { width: 24px; height: 1px; background: #f0f0f0; margin: 18px auto 0; opacity: 0.2; }
+
+  .links { display: flex; flex-direction: column; animation: fadeUp 0.6s ease 0.2s both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .btn {
+    display: flex; align-items: center; gap: 16px;
+    padding: 22px 4px;
+    border-bottom: 1px solid rgba(240,240,240,0.08);
+    text-decoration: none; transition: all 0.25s; cursor: pointer; width: 100%;
+  }
+
+  .btn:first-child { border-top: 1px solid rgba(240,240,240,0.08); }
+  .btn:hover .label { color: #f0f0f0; }
+  .btn:hover .arr { transform: translateX(5px); color: #f0f0f0; }
+  .btn:hover .dot { transform: scale(1.3); }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: transform 0.2s; background: rgba(240,240,240,0.4); }
+
+  .content { flex: 1; }
+  .label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(240,240,240,0.42); font-weight: 300; display: block; transition: color 0.2s; }
+  .sub { font-size: 10px; color: rgba(240,240,240,0.22); font-weight: 300; display: block; margin-top: 4px; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+  .arr { font-size: 13px; color: rgba(240,240,240,0.18); transition: all 0.25s; }
+
+  .cupons-wrapper { width: 100%; }
+
+  .cupons-toggle {
+    display: flex; align-items: center; gap: 16px;
+    padding: 22px 4px;
+    border-bottom: 1px solid rgba(240,240,240,0.08);
+    cursor: pointer; transition: all 0.25s; width: 100%; background: none;
+  }
+
+  .cupons-toggle:hover .label { color: #f0f0f0; }
+  .cupons-toggle:hover .arr-down { color: #f0f0f0; }
+  .cupons-toggle:hover .dot { transform: scale(1.3); }
+
+  .arr-down { font-size: 12px; color: rgba(240,240,240,0.2); transition: all 0.3s; margin-left: auto; }
+  .arr-down.open { transform: rotate(180deg); color: #f0f0f0; }
+
+  .cupons-list { display: none; flex-direction: column; padding: 8px 0 8px 23px; border-bottom: 1px solid rgba(240,240,240,0.08); }
+  .cupons-list.open { display: flex; }
+
+  .cupon-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 4px; text-decoration: none;
+    border-bottom: 1px solid rgba(240,240,240,0.05); transition: all 0.2s;
+  }
+  .cupon-item:last-child { border-bottom: none; }
+  .cupon-item:hover { padding-left: 8px; }
+  .cupon-brand { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,240,240,0.35); transition: color 0.2s; }
+  .cupon-item:hover .cupon-brand { color: #f0f0f0; }
+  .cupon-code { font-size: 9px; font-weight: 400; letter-spacing: 2px; color: rgba(240,240,240,0.45); text-transform: uppercase; }
+
+  .insta { text-align: center; margin-top: 40px; animation: fadeUp 0.6s ease 0.4s both; }
+  .insta p { font-size: 9px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(240,240,240,0.2); }
+  .insta span { color: rgba(240,240,240,0.35); }
+
+  .footer { text-align: center; margin-top: 48px; animation: fadeUp 0.6s ease 0.5s both; }
+  .footer p { font-size: 9px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,240,240,0.12); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/miracynthia/miracynthia.github.io/main/LOGO%20FUNDO%20TRANSP.png" 
+         class="logo-img" alt="Cynthia Mira Nutricionista">
+    <div class="header-divider"></div>
+  </div>
+
+  <div class="links">
+    <a href="LINK_DO_FORMS_AQUI" class="btn">
+      <div class="dot"></div>
+      <div class="content">
+        <span class="label">Acompanhamento Nutricional</span>
+        <span class="sub">Aplicar para uma vaga</span>
+      </div>
+      <span class="arr">→</span>
+    </a>
+
+    <div class="cupons-wrapper">
+      <div class="cupons-toggle" onclick="toggleCupons()">
+        <div class="dot"></div>
+        <div class="content">
+          <span class="label">Cupons de Desconto</span>
+          <span class="sub">Produtos e marcas que indico</span>
+        </div>
+        <span class="arr-down" id="arrDown">↓</span>
+      </div>
+      <div class="cupons-list" id="cuponsList">
+        <a href="LINK_MARCA_1" class="cupon-item">
+          <span class="cupon-brand">Marca 1</span>
+          <span class="cupon-code">CYNTHIA10</span>
+        </a>
+        <a href="LINK_MARCA_2" class="cupon-item">
+          <span class="cupon-brand">Marca 2</span>
+          <span class="cupon-code">CYNTHIA15</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="insta">
+    <p>Me encontre também no Instagram</p>
+    <p style="margin-top:5px;"><span>@cynthiamira.nutri</span></p>
+  </div>
+
+  <div class="footer">
+    <p>Cynthia Mira · Nutricionista · CRN · © 2026</p>
+  </div>
+</div>
+
+<script>
+  function toggleCupons() {
+    const list = document.getElementById('cuponsList');
+    const arr = document.getElementById('arrDown');
+    list.classList.toggle('open');
+    arr.classList.toggle('open');
+    arr.textContent = list.classList.contains('open') ? '↑' : '↓';
+  }
+</script>
+</body>
+</html>
